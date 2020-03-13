@@ -10,7 +10,7 @@ const Axios = axios.create({
     baseURL: apiEndPoint,
     timeout: 5000,
     responseType: "json",
-    withCredentials: true,
+    withCredentials: true, //是否携带cookie
     headers: {
         "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
     }
@@ -19,7 +19,7 @@ const Axios = axios.create({
 //传参序列化(添加拦截器) perHandler
 Axios.interceptors.request.use(
     config => {
-        if(config.url.indexOf(uploadCredentialApi) != -1){
+        if(config.url.indexOf(uploadCredentialApi) !== -1){
             console.log("upload file");
             config.headers = {"Content-Type": "multipart/form-data"}
         } else if(config.method === "post" || config.method === "get" || config.method === "delete") {
@@ -39,7 +39,7 @@ Axios.interceptors.request.use(
 
 Axios.interceptors.response.use(
     res => {
-        if(res.status != 200){
+        if(res.status !== 200){
             message.error({
                 showClose: true,
                 message: error,
